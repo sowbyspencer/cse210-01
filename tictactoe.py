@@ -7,6 +7,10 @@ Assignment: W01 Prove: Developer
 XOgrid = [[0,0,0],[0,0,0],[0,0,0]]
 display = [[1,2,3],[4,5,6],[7,8,9]]
 choices = list(range(1, 10))
+
+for i in range(len(choices)):
+    choices[i] = str(choices[i])
+
 winner = None
 
 #Variables for formatting
@@ -39,6 +43,7 @@ def turn(xo, selection):
         selection is which box was chosen
     Return: none
     """
+    selection = int(selection)
     # Translates the selection (an integer) to a pair (i and j) to be the row and column selected
     if selection < 4:
         i = 0
@@ -50,6 +55,7 @@ def turn(xo, selection):
         i = 2        
         j = selection - 7
 
+    selection = str(selection)
     # Remove the selection from available options
     choices.remove(selection)
 
@@ -86,10 +92,10 @@ def checkForWin():
             rowTotal += j
 
         if rowTotal == 3:
-            winner = "X"
+            winner = f"{green}X{default}"
             return
         elif rowTotal == -3:
-            winner = "O"
+            winner =  f"{yellow}O{default}"
             return
     
     # Check Columns
@@ -98,10 +104,10 @@ def checkForWin():
         for i in XOgrid:
             colTotal += i[j]
         if colTotal == 3:
-            winner = "X"
+            winner = f"{green}X{default}"
             return
         elif colTotal == -3:
-            winner = "O"
+            winner = f"{yellow}O{default}"
             return
 
     # Check diagnals
@@ -127,10 +133,11 @@ def main():
     
     # Repeat until there is a winner
     while winner == None:
-        selection = int(input(f"{green}X{default}'s turn to choose a square (1-9): "))
+
+        selection = input(f"{green}X{default}'s turn to choose a square (1-9): ")
         while not selection in choices:
             print(f"{red}{selection} is not an option.{default}")
-            selection = int(input(f"{green}X{default}'s turn to choose a square (1-9): "))
+            selection = input(f"{green}X{default}'s turn to choose a square (1-9): ")
         turn("X", selection)
 
         if winner != None:
@@ -140,10 +147,10 @@ def main():
             print(f"Good game. Thanks for playing!")
             return
 
-        selection = int(input(f"{yellow}O{default}'s turn to choose a square (1-9): "))
+        selection = input(f"{yellow}O{default}'s turn to choose a square (1-9): ")
         while not selection in choices:
             print(f"{red}{selection} is not an option.{default}")
-            selection = int(input(f"{yellow}O{default}'s turn to choose a square (1-9): "))
+            selection = input(f"{yellow}O{default}'s turn to choose a square (1-9): ")
         turn("O", selection)
     
     print(f"The winner is: {winner}")
